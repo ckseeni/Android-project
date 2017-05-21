@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html class="" lang="en_US"><head>
+    <!-- base href="https://cswithandroid.withgoogle.com/content/" -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    
+  <title>
+    Computer Science with Android -
+    
+  - Unit 2: Starting from scratch
+
+  </title>
+
+
+    <!-- The following translated strings are used in activity-generic.js and should be
+    declared before that file is imported. -->
+    <script async="" src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/cbgapi.loaded_1"></script><script src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/analytics.js" async=""></script><script async="" src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/cbgapi.loaded_0"></script><script>
+      // inline translations
+      var trans = {};
+
+      
+      trans.CHECK_ANSWER_TEXT =
+          " Check Answer ";
+
+      
+      trans.CHECK_ANSWERS_TEXT =
+          " Check Answers ";
+
+      
+      trans.SHOW_ANSWER_TEXT =
+          " Skip and Show Answer ";
+
+      
+      trans.SAVE_ANSWERS_TEXT =
+          " Save Answers ";
+
+      
+      trans.SAVE_DRAFT_TEXT =
+          " Save Draft ";
+
+      
+      trans.SUBMIT_ANSWERS_TEXT =
+          " Submit Answers ";
+
+      
+      trans.SUBMIT_ASSIGNMENT_TEXT =
+          " Submit Assignment ";
+
+      
+      trans.SUBMIT_REVIEW_TEXT =
+          " Submit Review ";
+
+      
+      trans.SELECT_ANSWER_PROMPT =
+          " Please click one of the buttons for your answer. ";
+
+      
+      trans.ALL_CORRECT_TEXT =
+          " All your answers are correct! ";
+
+      
+      trans.NUM_CORRECT_TEXT =
+          " Number of questions you answered correctly ";
+
+      
+      trans.YOUR_SCORE_TEXT =
+          " You received a score on this assessment of ";
+
+      
+      trans.LESSONS_TO_REVIEW_TEXT =
+          " Here are lessons you could review to improve your score ";
+
+      
+      trans.PERFECT_SCORE_SAVE_TEXT =
+          " Congratulations! Press the \&#39;Submit Answers\&#39; button to submit your grade. ";
+
+      
+      trans.GENERIC_SAVE_TEXT =
+          " Press the \&#39;Submit Answers\&#39; button below to save your scores. You can also edit your answers above before clicking \&#39;Submit Answers\&#39;. ";
+
+      
+      trans.SUBMIT_ASSIGNMENT_CONFIRMATION =
+          " Are you sure you want to submit this assignment? ";
+
+      
+      trans.SUBMIT_REVIEW_CONFIRMATION =
+          " Are you sure you want to submit this review? ";
+
+      
+      trans.CONFIRMATION_EXPLANATION =
+          " You cannot edit or delete it after you have done so. ";
+    </script>
+
+    
+    
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link rel="icon" href="https://cswithandroid.withgoogle.com/content/assets/img/favicon.ico">
+  <link href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/main.css" rel="stylesheet" type="text/css">
+  <link href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/minimal.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 1024px)">
+
+  <!-- jQuery should be imported first -->
+  <script src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/jquery.js"></script>
+
+  <script src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/activity-generic-1.js"></script>
+
+  <script src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/butterbar.js"></script>
+  <link rel="stylesheet" href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/butterbar.css" media="screen">
+
+    <script src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/in_place_lesson_editor.js"></script>
+    <link rel="stylesheet" href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/in_place_lesson_editor.css">
+    <link rel="stylesheet" href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/material-design-iconic-font.css">
+  
+
+    
+      <link rel="stylesheet" href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/global_i18n.css" type="text/css">
+    
+
+    
+
+    <script>
+      var eventXsrfToken = '1468929462/5gPIirbzjIz091CYRKZ8lQ==';
+      
+        var gcbCanRecordStudentEvents = true;
+      
+
+      
+        var transientStudent = false;
+      
+    </script>
+
+    
+      <script gapi_processed="true" type="text/javascript" src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/plusone.js"></script>
+    
+
+    <script>
+      function gcb_edit_hook_point(key) {
+        window.location=('dashboard?action=edit_html_hook&key=' +
+            encodeURIComponent(key));
+      }
+      $(function() {
+        // TODO(nretallack): This duplicates code in
+        // modules/dashboard/resources/js/view.js.
+        function parseJson(s) {
+          var xssiPrefix = ")]}'";
+          return JSON.parse(s.replace(xssiPrefix, ''));
+        }
+
+        $("#locale-select").change(function() {
+          var localeSelect = $("#locale-select");
+          var request = JSON.stringify({
+            xsrf_token: localeSelect.data("xsrf-token"),
+            payload: {
+              selected: localeSelect.val()
+            }
+          });
+          $.ajax({
+            url: "rest/locale",
+            type: "POST",
+            data: {request: request},
+            dataType: "text",
+            success: function(data) {
+              data = parseJson(data);
+              if (data.status == 200) {
+                window.location.reload();
+              }
+            }
+          });
+        });
+      });
+    </script>
+
+    
+    
+    <!-- Google Analytics.  This  boilerplate code is as emitted from
+         the Analytics page, except that IDs are templated and the
+         hostname is taken from the current page, not hardcoded. -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40934967-11', window.location.hostname);
+    ga('send', 'pageview');
+    </script>
+  
+
+    </head><body data-gcb-page-locale="en_US"><div id="dic_bubble" class="selection_bubble fontSize13 noSelect" style="z-index: 9999; border: 1px solid rgb(74, 174, 222); visibility: hidden;"></div><div class="gcb-html-hook" id="base-before-head-tag-ends"><link href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/acs.css" rel="stylesheet"></div>
+  
+
+  
+
+    <div class="gcb-html-hook" id="base-after-body-tag-begins"><!-- base.after_body_tag_begins --></div>
+
+    <script>
+      // Course-Builder specific setup for Google Tag Manager.  Iff
+      // Tag Managers is enabled, the values in the dataLayer list of
+      // dicts is made available to Tag Manager macros.
+      dataLayer = [{
+        'course_title': 'Computer Science with Android',
+        'event': 'default',  // Explicit value meaning not-really-set.
+        }];
+
+      function gcbSetPageInfo(dict) {
+        dataLayer.push(dict);
+      }
+
+      // Invoke page-specific block so that any calls to gcbReportPageInfo()
+      // are made before we hit the Tag Manager call, below.
+      
+  if ('gcbSetPageInfo' in window) {
+    gcbSetPageInfo({
+      'page_type': 'unit',
+      'unit_id': '4',
+      
+        'lesson_id': '6',
+      
+      
+    });
+  }
+
+    </script>
+
+    
+
+    <!-- ButterBar -->
+    <div class="gcb-butterbar-container">
+      <div id="gcb-butterbar-top" class="gcb-butterbar" style="margin-top:50px" aria-live="polite">
+        <p id="gcb-butterbar-message"></p>
+        <a id="gcb-butterbar-close">X</a>
+      </div>
+    </div>
+
+    <!-- logo bar -->
+    <div id="gcb-header" role="banner">
+      <div class="gcb-aux clearfix">
+        <p class="gcb-course-image">
+          <a href="https://cswithandroid.withgoogle.com/content/">
+            <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/your_logo_here.png" alt="YOUR_LOGO_HERE">
+          </a>
+        </p>
+        <p class="gcb-title-header">
+          <a href="https://cswithandroid.withgoogle.com/content/">Computer Science with Android</a>
+        </p>
+        
+          <span class="plusone-button" id="plusone-3" style="height: 15px; width: 70px; display: inline-block; text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; background-position: initial initial; background-repeat: initial initial; ">
+            <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 90px; height: 20px;"><iframe title="+1" data-gapiattached="true" src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/fastbutton.html" name="I0_1468929466613" id="I0_1468929466613" vspace="0" tabindex="0" style="position: static; top: 0px; width: 90px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div>
+          </span>
+        
+
+        
+        <div class="gcb-pull-right gcb-login-header" style="font-size: larger;">
+          <span class="gcb-login-header-email">
+            ckseenitce@gmail.com
+            
+            &nbsp;|&nbsp;
+          </span>
+          <a href="https://cswithandroid.withgoogle.com/_ah/logout?continue=https://www.google.com/accounts/Logout%3Fcontinue%3Dhttps://appengine.google.com/_ah/logout%253Fcontinue%253Dhttps://cswithandroid.withgoogle.com/content%26service%3Dah" style="text-decoration: underline;">
+            
+            Logout
+          </a>
+        </div>
+        
+      </div>
+    </div>
+
+    
+  <!-- nav bar -->
+  <div class="gcb-nav gcb-complex" id="gcb-nav-x">
+    <div class="gcb-aux">
+      <ul class="clearfix">
+
+        <!-- left-aligned links in order -->
+        <div class="gcb-html-hook" id="base-after-navbar-begins"><!-- base.after_navbar_begins --></div>
+        <li>
+          
+          <a href="https://cswithandroid.withgoogle.com/content/announcements">Announcements</a>
+        </li>
+        <li class="active">
+          
+          <a href="https://cswithandroid.withgoogle.com/content/course">Course</a>
+        </li>
+        
+        
+          <li>
+            
+            <a href="https://cswithandroid.withgoogle.com/content/student/home">Progress</a>
+          </li>
+        
+        
+          <li>
+            <a href="https://cswithandroid.withgoogle.com/content/modules/extra_tabs/render?index=0">FAQ</a>
+          </li>
+        
+
+        <!-- right-aligned links are in order -->
+        
+        
+        <div class="gcb-html-hook" id="base-before-navbar-ends"><!-- base.before_navbar_ends --> <!-- Search module disabled (fkj@). --></div>
+      </ul>
+    </div>
+  </div>
+
+
+    <!-- top section -->
+    <div class="is-wrapper">
+      <div class="gcb-aux">
+        
+
+        <div class="gcb-html-hook" id="base-after-top-content-ends"><!-- base.after_top_content_ends --></div>
+
+        <!-- main section -->
+        
+
+<script>
+  var questionData = {};
+  questionData.scored = true;
+</script>
+
+
+<div id="gcb-main">
+  <div id="gcb-left-nav-toggle">
+    <a href="" class="gcb-button">
+      <span class="show">
+        
+        Show Syllabus
+      </span>
+      <span class="hide">
+        
+        Hide Syllabus
+      </span>
+    </a>
+  </div>
+  <script>
+    $('#gcb-left-nav-toggle a').click(function(){
+        if ($(this).hasClass('show')) {
+            $(this).removeClass('show');
+            $('#gcb-nav-y').hide();
+            $('.gcb-unit-header').show('fast');
+            $('#gcb-nav-y + .gcb-article').show('fast');
+        } else {
+            $(this).addClass('show');
+            $('#gcb-nav-y').show('fast');
+            $('.gcb-unit-header').hide();
+            $('#gcb-nav-y + .gcb-article').hide();
+        }
+        return false;
+    });
+  </script>
+
+  <ul id="gcb-breadcrumb" class="gcb-breadcrumb">
+    
+    <li><a href="https://cswithandroid.withgoogle.com/content/course">Course</a></li>
+    <li><a href="https://cswithandroid.withgoogle.com/content/unit?unit=4">
+      Unit 2: Starting from scratch</a></li>
+    
+      <li>
+        
+          
+          Lesson 2</li>
+      
+    
+  </ul>
+
+  <div id="gcb-unit-header">
+    <h1 class="gcb-unit-header">
+      Unit 2: Starting from scratch
+      
+    </h1>
+  </div>
+
+  
+    
+
+
+
+
+
+<div class="gcb-nav left-menu" id="gcb-nav-y" role="navigation">
+  <ul>
+    <div class="gcb-html-hook" id="unit-after-leftnav-begins"></div>
+
+    
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded leaf">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-22">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=22">
+      
+      Pre Assessment
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-1">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1">
+      
+      Unit A: App Inventor (optional)
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-2">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1&amp;lesson=2">
+      
+      <span class="">1 Preparation (complete this before the workshop)</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-3">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1&amp;lesson=3">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-14">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1&amp;lesson=14">
+      
+      <span class="">3 Unit A Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-27">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27">
+      
+      Unit 1: Getting started
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-28">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27&amp;lesson=28">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-29">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27&amp;lesson=29">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+    
+  
+
+  <li class="gcb-last-location">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-33">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27&amp;lesson=33">
+      
+      <span class="">3 Unit 1 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-4">
+  
+
+      
+      Unit 2: Starting from scratch
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container expanded">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-5">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4&amp;lesson=5">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="active">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-6">
+  
+
+      
+      <span class="">2 Workshop</span>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-16">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4&amp;lesson=16">
+      
+      <span class="">3 Unit 2 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-7">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7">
+      
+      Unit 3: Binary Search and Application State
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-8">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=8">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-9">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=9">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-17">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=17">
+      
+      <span class="">3 Unit 3 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-25">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=25">
+      
+      <span class="">4 Source Code Upload - Unit 3</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-30">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30">
+      
+      Unit 4: Trees
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-31">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=31">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-32">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=32">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-34">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=34">
+      
+      <span class="">3 Unit 4 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-35">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=35">
+      
+      <span class="">4 Source Code Upload - Unit 4</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-10">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10">
+      
+      Unit 5: Priority Queue
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-11">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=11">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-12">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=12">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-18">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=18">
+      
+      <span class="">3 Unit 5 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-26">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=26">
+      
+      <span class="">4 Source Code Upload - Unit 5</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-36">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=36">
+      
+      Unit 6: Code Sprint
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-37">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=36&amp;lesson=37">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-38">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=36&amp;lesson=38">
+      
+      <span class="">2 Unit 6 survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-39">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=39">
+      
+      Unit 7: Graph traversal
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-40">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=39&amp;lesson=40">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-41">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=39&amp;lesson=41">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-42">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=42">
+      
+      Unit 8: Monte Carlo and Unit Testing
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-43">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=42&amp;lesson=43">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-44">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=42&amp;lesson=44">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-45">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=45">
+      
+      Unit 9: Dynamic Programming
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-46">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=45&amp;lesson=46">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-47">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=45&amp;lesson=47">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded leaf">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-23">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=23">
+      
+      Post Assessment
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded leaf">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-19">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=19">
+      
+      Post Course Student Survey
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+        </div>
+      
+
+      <script>
+        $('li.gcb-unit-title').click(function() {
+          if ($(this).hasClass('leaf')) {
+            return;
+          }
+          if ($(this).hasClass('expanded')) {
+            $(this).removeClass('expanded');
+            $(this).next().removeClass('expanded');
+          } else {
+            $(this).addClass('expanded');
+            $(this).next().addClass('expanded');
+          }
+        });
+      </script>
+    
+    <div class="gcb-html-hook" id="unit-before-leftnav-ends"></div>
+  </ul>
+</div>
+  
+
+  <div id="gcb-main-article" class="gcb-article tab-content" role="main">
+    <div class="gcb-html-hook" id="unit-after-content-begins"></div>
+
+    
+
+      
+        <div class="gcb-aside gcb-button-box">
+          <h1 class="gcb-lesson-title">
+  <span id="lesson_title_6">Workshop</span>
+  
+  
+</h1>
+
+  <div>
+    
+  </div><!-- /gcb-cols -->
+
+  
+    
+  <div class="gcb-lesson-content" data-scored="False" data-question-batch-id="L6">
+    <div><link href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/markdown.html" rel="stylesheet"></div><div><div class="gcb-markdown"><p>In this workshop, we will create a game from scratch in Android Studio.
+The game that we will be creating is a dice game called Scarne's dice (you may
+already be familiar with it from a previous unit).</p>
+<h3>Scarne's dice</h3>
+<p>Scarne’s Dice is a turn-based dice game where players score points by rolling a
+die and then:</p>
+<ul>
+<li>if they roll a 1, score no points and lose their turn</li>
+<li>if they roll a 2 to 6:<ul>
+<li>add the rolled value to their points</li>
+<li>choose to either reroll or keep their score and end their turn</li>
+</ul>
+</li>
+</ul>
+<p>The winner is the first player that reaches (or exceeds) 100 points.</p>
+<p>For example, if a player starts their turn and rolls a 6, they can choose to
+either ‘hold’ and end their turn, in which case they can add the 6 to their
+score, or to reroll and potentially score more points.</p>
+<p>Let’s say they decide to roll again, and they get a 4. They now have the option
+to end their turn and add 10 points (6 + 4) to their score, or to roll again to
+get even more points.</p>
+<p>They decide to roll again, but get a 1. Getting a 1 makes the player lose all
+the points from their turn (so their score is the same as before their turn),
+and finishes their turn, allowing the second player to begin their turn.</p>
+<p>This goes on until one of the players reaches 100 points or more.</p>
+<h3>Implementing the UI</h3>
+<p>As mentioned in the preparation for this workshop, there is no starter code for
+this activity but we do provide you with some some images for the
+<a href="https://cswithandroid.withgoogle.com/content/assets/img/dice_faces.zip">dice faces</a>.</p>
+<p><em>If you finished creating the UI in the preparation activity, you can skip this
+next step.</em> Start by creating a blank activity and create the UI shown in the
+image below using either the visual editor or the XML editor (or probably a
+combination of both). The UI is composed of:</p>
+<ul>
+<li>A <code>TextView</code> to display the score and status of the game</li>
+<li>An <code>ImageView</code> to display the current die (default to the image of your
+  choice)</li>
+<li>Three buttons to either roll the die, end your turn or start over</li>
+</ul>
+<p><img alt="Screen shot" src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/scarnes_dice.png"></p>
+<h3>Implementing the game</h3>
+<p>All the game logic for this app will be implemented in the <code>Activity</code> class
+(the file will be called <code>MainActivity.java</code> if you accepted the default name).
+The <code>Activity</code> template has some default methods to which you will add:</p>
+<ul>
+<li>Four global variables to store:<ul>
+<li>the user's overall score state</li>
+<li>the user's turn score</li>
+<li>the computer's overall score</li>
+<li>the computer's turn score</li>
+</ul>
+</li>
+<li>A click handler for the "Roll" button that will:<ul>
+<li>randomly select a dice value</li>
+<li>update the display to reflect the rolled value</li>
+</ul>
+</li>
+</ul>
+<p>Use <code>getResources().getDrawable</code> in order to programmatically access other
+images. This functionality will also be needed for the computer turn so a helper
+function to roll the die may be useful to implement.</p>
+<p>Then start creating game logic. If the roll is not a 1, update the user's turn
+score by the value of the roll and update the label to "Your score: 0 computer
+score: 0 your turn score: X". If the roll is a 1, reset the turn score to 0 and
+update the label accordingly. <code>TextView</code> can be edited programmatically by
+calling <code>findViewById</code> to get the <code>TextView</code> object.</p>
+<p>Having written the basic "Roll" functionality, you can tackle the other two
+button handlers:</p>
+<ul>
+<li>When <code>ResetButton</code> is clicked, reset the 4 global variables to 0 and update
+the label text</li>
+<li>When <code>HoldButton</code> is clicked, updating the user's overall score, reset the
+user round score and update the label.</li>
+</ul>
+<p>At this stage, the basic user turn functionality is in place. Now, you can
+implement the computer turn. Start off with a very simple strategy for the
+computer: if the computer's round score is less than 20, re-roll, otherwise
+hold.</p>
+<p>Create a helper method called <code>computerTurn</code>, it will need to:</p>
+<ul>
+<li>Disable the roll and hold buttons</li>
+<li>Create a while loop that loops over each of the computer's turn. During each
+  iteration of the loop:<ul>
+<li>pick a random die value and display it (hopefully using the helper you
+  created earlier)</li>
+<li>follow the game rules depending on the value of the roll.</li>
+</ul>
+</li>
+</ul>
+<p>Be sure to update the label with the computer's round score or "Computer holds"
+or "Computer rolled a one" as appropriate.</p>
+<p>Finally, invoke the <code>computerTurn</code> procedure from the both the <code>HoldButton</code>
+handler and the <code>RollButton</code> handler (if the user rolled a 1).</p>
+<p>You may find again that a helper procedure is useful in doing the house
+cleaning that concludes the computer's turn (updating the computer's overall
+score, reset its turn score and reenabling the buttons).</p>
+<p>The game should now be functional so try playing a few rounds against the
+computer. Remember to use the logging library that you read about in last
+unit's preparation to help diagnose what is happening when your program doesn't
+behave as expected.</p>
+<p>Although the game (hopefully) works roughly as intended you may find the
+computer turn to be quite hard to follow as it happens so quickly that you can
+hardly see the die rolls and the label updates. Let's address that by
+refactoring the computer turn:</p>
+<ul>
+<li>Get rid of the while loop (but not its contents!) and make the <code>computerTurn</code>
+method handle a single roll of the computer's turn</li>
+<li>If the computer can and does decide to roll again create a timed event that
+will do so after an appropriate delay (say 500 ms). To accomplish this, you
+can use <code>Handler.postDelayed</code>, an example of which can be seen on
+<a href="http://stackoverflow.com/questions/4597690/android-timer-how">StackOverflow</a>.</li>
+</ul>
+<p>Enjoy the wonders of a fully functional game of Scarne's dice!</p>
+<h3>Extensions</h3>
+<p>This unit's extension suggestions are:</p>
+<ul>
+<li>Two-dice version. In this version, two standard dice are rolled:<ul>
+<li>if neither shows a 1, their sum is added to the turn total</li>
+<li>if a single 1 is rolled, the player scores nothing and the turn ends</li>
+<li>if two 1s are rolled, the player’s entire score is lost, and the turn ends</li>
+<li>if a double is rolled, the point total is added to the turn total as with
+any roll but the player is obligated to roll again.</li>
+</ul>
+</li>
+<li>Fast mode: Rather than rolling the dice a variable number of times, the user
+  picks a number of dice to roll then rolls those dice all at once. If a 1 is
+  shown, the user gets nothing. If no 1 is shown, the user gets the sum of the
+  dice. In either case, the turn is over and the other player takes a turn.
+  You can read more about this game in this <a href="http://personal.vu.nl/h.c.tijms/morfismospaper.pdf">research paper</a>.</li>
+<li>Implement a smarter computer player. I wouldn't recommend attempting the
+optimal player (which you can read about
+<a href="http://cs.gettysburg.edu/projects/pig/pigVis.html">here</a> ) but take into
+account the difference between the computer score and user score in deciding
+when to hold</li>
+<li>Write another dice game of your choice</li>
+<li>Add support for playing the game to 100 points, declaring a winner and
+starting a new game</li>
+<li>Create an animation representing each die roll. This will avoid confusion
+when rolling the same value twice in a row.</li>
+</ul></div></div><div></div>
+    
+  </div>
+
+
+
+  
+
+
+        </div><!-- /gcb-aside -->
+      
+      
+        <div class="gcb-aside gcb-button-box">
+          <link rel="stylesheet" href="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/manual_progress.css">
+
+
+
+
+  <div class="manual-progress manual-progress-unit" data-xsrf-token="1468929464/Rf7OecHo4Pxtug7sDwvHzQ==" data-key="4" data-url="rest/student/progress/unit">
+    <button id="manual-progress-complete-unit">
+      
+      I have completed this unit.
+    </button>
+  </div>
+
+
+
+
+
+<script src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/manual_progress.js"></script>
+        </div><!-- /gcb-aside -->
+      
+
+      <div id="gcb-nav-button-box" class="gcb-button-box">
+        
+        <div class="gcb-prev-button">
+          
+            
+            <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4&amp;lesson=5"> Previous Page </a>
+          
+        </div>
+        <div class="gcb-next-button">
+          
+            
+            <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4&amp;lesson=16"> Next Page </a>
+          
+        </div>
+        
+      </div>
+    
+    <div class="gcb-html-hook" id="unit-before-content-ends"></div>
+  </div>
+</div>
+
+
+        <div class="gcb-html-hook" id="base-after-main-content-ends"><!-- base.after_main_content_ends --></div>
+      </div>
+    </div>
+
+    <!-- footer section -->
+    <div style="margin-top: 50px;" id="gcb-signature"></div>
+    <div class="gcb-footer" id="gcb-footer">
+      <div id="gcb-footer-local">
+        <div class="gcb-aux">
+        </div>
+      </div>
+      <div id="gcb-footer-global" role="contentinfo">
+        <div class="gcb-aux">
+          <ul>
+            
+            <li>
+              <a href="http://www.google.com/" target="_blank" id="institution-link">Google</a>
+            </li>
+            
+            
+            <li>
+              <a href="https://www.google.com/intl/en/policies/" target="_blank" id="privacy-policy-link">
+                
+                Privacy &amp; Terms
+              </a>
+            </li>
+            
+            
+            
+              <li><a href="https://cswithandroid.withgoogle.com/content/student/unenroll">Delete My Data</a></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="gcb-html-hook" id="base-before-body-tag-ends"><!-- base.before_body_tag_ends --></div>
+
+    
+    
+    
+  
+<iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;" src="Computer%20Science%20with%20Android%20-%20-%20Unit%202:%20Starting%20from%20scratch_files/postmessageRelay.html" id="oauth2relay627078562" name="oauth2relay627078562"></iframe></body></html>

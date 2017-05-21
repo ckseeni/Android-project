@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<html class="" lang="en_US"><head>
+    <!-- base href="https://cswithandroid.withgoogle.com/content/" -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    
+  <title>
+    Computer Science with Android -
+    
+  - Unit 3: Binary Search and Application State
+
+  </title>
+
+
+    <!-- The following translated strings are used in activity-generic.js and should be
+    declared before that file is imported. -->
+    <script async="" src="gh_files/cbgapi.loaded_1"></script><script src="gh_files/analytics.js" async=""></script><script async="" src="gh_files/cbgapi.loaded_0"></script><script>
+      // inline translations
+      var trans = {};
+
+      
+      trans.CHECK_ANSWER_TEXT =
+          " Check Answer ";
+
+      
+      trans.CHECK_ANSWERS_TEXT =
+          " Check Answers ";
+
+      
+      trans.SHOW_ANSWER_TEXT =
+          " Skip and Show Answer ";
+
+      
+      trans.SAVE_ANSWERS_TEXT =
+          " Save Answers ";
+
+      
+      trans.SAVE_DRAFT_TEXT =
+          " Save Draft ";
+
+      
+      trans.SUBMIT_ANSWERS_TEXT =
+          " Submit Answers ";
+
+      
+      trans.SUBMIT_ASSIGNMENT_TEXT =
+          " Submit Assignment ";
+
+      
+      trans.SUBMIT_REVIEW_TEXT =
+          " Submit Review ";
+
+      
+      trans.SELECT_ANSWER_PROMPT =
+          " Please click one of the buttons for your answer. ";
+
+      
+      trans.ALL_CORRECT_TEXT =
+          " All your answers are correct! ";
+
+      
+      trans.NUM_CORRECT_TEXT =
+          " Number of questions you answered correctly ";
+
+      
+      trans.YOUR_SCORE_TEXT =
+          " You received a score on this assessment of ";
+
+      
+      trans.LESSONS_TO_REVIEW_TEXT =
+          " Here are lessons you could review to improve your score ";
+
+      
+      trans.PERFECT_SCORE_SAVE_TEXT =
+          " Congratulations! Press the \&#39;Submit Answers\&#39; button to submit your grade. ";
+
+      
+      trans.GENERIC_SAVE_TEXT =
+          " Press the \&#39;Submit Answers\&#39; button below to save your scores. You can also edit your answers above before clicking \&#39;Submit Answers\&#39;. ";
+
+      
+      trans.SUBMIT_ASSIGNMENT_CONFIRMATION =
+          " Are you sure you want to submit this assignment? ";
+
+      
+      trans.SUBMIT_REVIEW_CONFIRMATION =
+          " Are you sure you want to submit this review? ";
+
+      
+      trans.CONFIRMATION_EXPLANATION =
+          " You cannot edit or delete it after you have done so. ";
+    </script>
+
+    
+    
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link rel="icon" href="https://cswithandroid.withgoogle.com/content/assets/img/favicon.ico">
+  <link href="gh_files/main.css" rel="stylesheet" type="text/css">
+  <link href="gh_files/minimal.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 1024px)">
+
+  <!-- jQuery should be imported first -->
+  <script src="gh_files/jquery.js"></script>
+
+  <script src="gh_files/activity-generic-1.js"></script>
+
+  <script src="gh_files/butterbar.js"></script>
+  <link rel="stylesheet" href="gh_files/butterbar.css" media="screen">
+
+    <script src="gh_files/in_place_lesson_editor.js"></script>
+    <link rel="stylesheet" href="gh_files/in_place_lesson_editor.css">
+    <link rel="stylesheet" href="gh_files/material-design-iconic-font.css">
+  
+
+    
+      <link rel="stylesheet" href="gh_files/global_i18n.css" type="text/css">
+    
+
+    
+
+    <script>
+      var eventXsrfToken = '1469705336/ezbilgO-e-R9d9ekBUhwAA==';
+      
+        var gcbCanRecordStudentEvents = true;
+      
+
+      
+        var transientStudent = false;
+      
+    </script>
+
+    
+      <script gapi_processed="true" type="text/javascript" src="gh_files/plusone.js"></script>
+    
+
+    <script>
+      function gcb_edit_hook_point(key) {
+        window.location=('dashboard?action=edit_html_hook&key=' +
+            encodeURIComponent(key));
+      }
+      $(function() {
+        // TODO(nretallack): This duplicates code in
+        // modules/dashboard/resources/js/view.js.
+        function parseJson(s) {
+          var xssiPrefix = ")]}'";
+          return JSON.parse(s.replace(xssiPrefix, ''));
+        }
+
+        $("#locale-select").change(function() {
+          var localeSelect = $("#locale-select");
+          var request = JSON.stringify({
+            xsrf_token: localeSelect.data("xsrf-token"),
+            payload: {
+              selected: localeSelect.val()
+            }
+          });
+          $.ajax({
+            url: "rest/locale",
+            type: "POST",
+            data: {request: request},
+            dataType: "text",
+            success: function(data) {
+              data = parseJson(data);
+              if (data.status == 200) {
+                window.location.reload();
+              }
+            }
+          });
+        });
+      });
+    </script>
+
+    
+    
+    <!-- Google Analytics.  This  boilerplate code is as emitted from
+         the Analytics page, except that IDs are templated and the
+         hostname is taken from the current page, not hardcoded. -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40934967-11', window.location.hostname);
+    ga('send', 'pageview');
+    </script>
+  
+
+    </head><body data-gcb-page-locale="en_US"><div class="gcb-html-hook" id="base-before-head-tag-ends"><link href="gh_files/acs.css" rel="stylesheet"></div>
+  
+
+  
+
+    <div class="gcb-html-hook" id="base-after-body-tag-begins"><!-- base.after_body_tag_begins --></div>
+
+    <script>
+      // Course-Builder specific setup for Google Tag Manager.  Iff
+      // Tag Managers is enabled, the values in the dataLayer list of
+      // dicts is made available to Tag Manager macros.
+      dataLayer = [{
+        'course_title': 'Computer Science with Android',
+        'event': 'default',  // Explicit value meaning not-really-set.
+        }];
+
+      function gcbSetPageInfo(dict) {
+        dataLayer.push(dict);
+      }
+
+      // Invoke page-specific block so that any calls to gcbReportPageInfo()
+      // are made before we hit the Tag Manager call, below.
+      
+  if ('gcbSetPageInfo' in window) {
+    gcbSetPageInfo({
+      'page_type': 'unit',
+      'unit_id': '7',
+      
+        'lesson_id': '9',
+      
+      
+    });
+  }
+
+    </script>
+
+    
+
+    <!-- ButterBar -->
+    <div class="gcb-butterbar-container">
+      <div id="gcb-butterbar-top" class="gcb-butterbar" style="margin-top:50px" aria-live="polite">
+        <p id="gcb-butterbar-message"></p>
+        <a id="gcb-butterbar-close">X</a>
+      </div>
+    </div>
+
+    <!-- logo bar -->
+    <div id="gcb-header" role="banner">
+      <div class="gcb-aux clearfix">
+        <p class="gcb-course-image">
+          <a href="https://cswithandroid.withgoogle.com/content/">
+            <img src="gh_files/your_logo_here.png" alt="YOUR_LOGO_HERE">
+          </a>
+        </p>
+        <p class="gcb-title-header">
+          <a href="https://cswithandroid.withgoogle.com/content/">Computer Science with Android</a>
+        </p>
+        
+          <span class="plusone-button" id="plusone-3" style="height: 15px; width: 70px; display: inline-block; text-indent: 0px; margin: 0px; padding: 0px; background-color: transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; background-position: initial initial; background-repeat: initial initial; ">
+            <div id="___plusone_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 90px; height: 20px;"><iframe title="+1" data-gapiattached="true" src="gh_files/fastbutton.html" name="I1_1469705339409" id="I1_1469705339409" vspace="0" tabindex="0" style="position: static; top: 0px; width: 90px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div>
+          </span>
+        
+
+        
+        <div class="gcb-pull-right gcb-login-header" style="font-size: larger;">
+          <span class="gcb-login-header-email">
+            ckseenitce@gmail.com
+            
+            &nbsp;|&nbsp;
+          </span>
+          <a href="https://cswithandroid.withgoogle.com/_ah/logout?continue=https://www.google.com/accounts/Logout%3Fcontinue%3Dhttps://appengine.google.com/_ah/logout%253Fcontinue%253Dhttps://cswithandroid.withgoogle.com/content%26service%3Dah" style="text-decoration: underline;">
+            
+            Logout
+          </a>
+        </div>
+        
+      </div>
+    </div>
+
+    
+  <!-- nav bar -->
+  <div class="gcb-nav gcb-complex" id="gcb-nav-x">
+    <div class="gcb-aux">
+      <ul class="clearfix">
+
+        <!-- left-aligned links in order -->
+        <div class="gcb-html-hook" id="base-after-navbar-begins"><!-- base.after_navbar_begins --></div>
+        <li>
+          
+          <a href="https://cswithandroid.withgoogle.com/content/announcements">Announcements</a>
+        </li>
+        <li class="active">
+          
+          <a href="https://cswithandroid.withgoogle.com/content/course">Course</a>
+        </li>
+        
+        
+          <li>
+            
+            <a href="https://cswithandroid.withgoogle.com/content/student/home">Progress</a>
+          </li>
+        
+        
+          <li>
+            <a href="https://cswithandroid.withgoogle.com/content/modules/extra_tabs/render?index=0">FAQ</a>
+          </li>
+        
+
+        <!-- right-aligned links are in order -->
+        
+        
+        <div class="gcb-html-hook" id="base-before-navbar-ends"><!-- base.before_navbar_ends --> <!-- Search module disabled (fkj@). --></div>
+      </ul>
+    </div>
+  </div>
+
+
+    <!-- top section -->
+    <div class="is-wrapper">
+      <div class="gcb-aux">
+        
+
+        <div class="gcb-html-hook" id="base-after-top-content-ends"><!-- base.after_top_content_ends --></div>
+
+        <!-- main section -->
+        
+
+<script>
+  var questionData = {};
+  questionData.scored = true;
+</script>
+
+
+<div id="gcb-main">
+  <div id="gcb-left-nav-toggle">
+    <a href="" class="gcb-button">
+      <span class="show">
+        
+        Show Syllabus
+      </span>
+      <span class="hide">
+        
+        Hide Syllabus
+      </span>
+    </a>
+  </div>
+  <script>
+    $('#gcb-left-nav-toggle a').click(function(){
+        if ($(this).hasClass('show')) {
+            $(this).removeClass('show');
+            $('#gcb-nav-y').hide();
+            $('.gcb-unit-header').show('fast');
+            $('#gcb-nav-y + .gcb-article').show('fast');
+        } else {
+            $(this).addClass('show');
+            $('#gcb-nav-y').show('fast');
+            $('.gcb-unit-header').hide();
+            $('#gcb-nav-y + .gcb-article').hide();
+        }
+        return false;
+    });
+  </script>
+
+  <ul id="gcb-breadcrumb" class="gcb-breadcrumb">
+    
+    <li><a href="https://cswithandroid.withgoogle.com/content/course">Course</a></li>
+    <li><a href="https://cswithandroid.withgoogle.com/content/unit?unit=7">
+      Unit 3: Binary Search and Application State</a></li>
+    
+      <li>
+        
+          
+          Lesson 2</li>
+      
+    
+  </ul>
+
+  <div id="gcb-unit-header">
+    <h1 class="gcb-unit-header">
+      Unit 3: Binary Search and Application State
+      
+    </h1>
+  </div>
+
+  
+    
+
+
+
+
+
+<div class="gcb-nav left-menu" id="gcb-nav-y" role="navigation">
+  <ul>
+    <div class="gcb-html-hook" id="unit-after-leftnav-begins"></div>
+
+    
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded leaf">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-22">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=22">
+      
+      Pre Assessment
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-1">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1">
+      
+      Unit A: App Inventor (optional)
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-2">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1&amp;lesson=2">
+      
+      <span class="">1 Preparation (complete this before the workshop)</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-3">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1&amp;lesson=3">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-14">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=1&amp;lesson=14">
+      
+      <span class="">3 Unit A Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-27">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27">
+      
+      Unit 1: Getting started
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-28">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27&amp;lesson=28">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-29">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27&amp;lesson=29">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-33">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=27&amp;lesson=33">
+      
+      <span class="">3 Unit 1 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-4">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4">
+      
+      Unit 2: Starting from scratch
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-5">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4&amp;lesson=5">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-6">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4&amp;lesson=6">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-16">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=4&amp;lesson=16">
+      
+      <span class="">3 Unit 2 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-7">
+  
+
+      
+      Unit 3: Binary Search and Application State
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container expanded">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+    
+  
+
+  <li class="gcb-last-location">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-8">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=8">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="active">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-9">
+  
+
+      
+      <span class="">2 Workshop</span>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-17">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=17">
+      
+      <span class="">3 Unit 3 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-25">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=25">
+      
+      <span class="">4 Source Code Upload - Unit 3</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-30">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30">
+      
+      Unit 4: Trees
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-31">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=31">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-32">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=32">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-34">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=34">
+      
+      <span class="">3 Unit 4 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-35">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=30&amp;lesson=35">
+      
+      <span class="">4 Source Code Upload - Unit 4</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-10">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10">
+      
+      Unit 5: Priority Queue
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-11">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=11">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-12">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=12">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-18">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=18">
+      
+      <span class="">3 Unit 5 Survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-26">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=10&amp;lesson=26">
+      
+      <span class="">4 Source Code Upload - Unit 5</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/in_progress.png" alt="In progress" title="" class="gcb-progress-icon" id="progress-inprogress-36">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=36">
+      
+      Unit 6: Code Sprint
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-37">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=36&amp;lesson=37">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-38">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=36&amp;lesson=38">
+      
+      <span class="">2 Unit 6 survey</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-39">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=39">
+      
+      Unit 7: Graph traversal
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-40">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=39&amp;lesson=40">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-41">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=39&amp;lesson=41">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-42">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=42">
+      
+      Unit 8: Monte Carlo and Unit Testing
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-43">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=42&amp;lesson=43">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-44">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=42&amp;lesson=44">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-45">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=45">
+      
+      Unit 9: Dynamic Programming
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-46">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=45&amp;lesson=46">
+      
+      <span class="">1 Preparation</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+            
+  
+    
+  
+  
+    
+  
+  
+  
+
+  <li class="">
+    <div class="gcb-lesson-title-with-progress">
+      
+  
+    
+      
+      
+      
+    
+    <img src="gh_files/completed.png" alt="Completed" title="" class="gcb-progress-icon" id="progress-completed-47">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=45&amp;lesson=47">
+      
+      <span class="">2 Workshop</span>
+      
+        </a>
+      
+
+      
+      
+      
+    </div>
+  </li>
+
+
+            
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded leaf">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-23">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=23">
+      
+      Post Assessment
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+        </div>
+      
+        
+          
+        
+        
+  
+
+  <li class="gcb-unit-title expanded leaf">
+    <p class="gcb-top-content">
+      
+  
+    
+      
+      
+      
+        
+        
+      
+    
+    <img src="gh_files/not_started.png" alt="Not yet started" title="" class="gcb-progress-icon" id="progress-notstarted-19">
+  
+
+      
+        <a href="https://cswithandroid.withgoogle.com/content/unit?unit=19">
+      
+      Post Course Student Survey
+      
+        </a>
+      
+
+      
+      
+      
+    </p>
+  </li>
+
+
+        <div id="gcb-lesson-container" class="gcb-lesson-container">
+          
+        </div>
+      
+
+      <script>
+        $('li.gcb-unit-title').click(function() {
+          if ($(this).hasClass('leaf')) {
+            return;
+          }
+          if ($(this).hasClass('expanded')) {
+            $(this).removeClass('expanded');
+            $(this).next().removeClass('expanded');
+          } else {
+            $(this).addClass('expanded');
+            $(this).next().addClass('expanded');
+          }
+        });
+      </script>
+    
+    <div class="gcb-html-hook" id="unit-before-leftnav-ends"></div>
+  </ul>
+</div>
+  
+
+  <div id="gcb-main-article" class="gcb-article tab-content" role="main">
+    <div class="gcb-html-hook" id="unit-after-content-begins"></div>
+
+    
+
+      
+        <div class="gcb-aside gcb-button-box">
+          <h1 class="gcb-lesson-title">
+  <span id="lesson_title_9">Workshop</span>
+  
+  
+</h1>
+
+  <div>
+    
+  </div><!-- /gcb-cols -->
+
+  
+    
+  <div class="gcb-lesson-content" data-scored="False" data-question-batch-id="L9">
+    <div><link href="gh_files/markdown.html" rel="stylesheet"></div><span id="docs-internal-guid-c667fa7b-3f30-1e4c-47a4-9f5738551715">
+<div><div class="gcb-markdown"><p>This workshop's activity will be a game called Ghost.</p>
+<p>Ghost is a word game in which players take turns adding individual letters to a
+growing word fragment, trying <strong>not</strong> to be the one to complete a valid word.
+Each fragment must be the beginning of an actual word, and, for our purposes,
+we will consider 4 to be the minimum word length. The player who completes a
+word or creates a fragment that is not the prefix of a word loses the round.</p>
+<p>So on player 1's turn, they can:</p>
+<ul>
+<li>challenge player 2's word if they think player 2 has formed a valid word of at
+least 4 letters. If the fragment is a word, then player 1 wins; if the fragment
+is not a word, then player 2 wins.</li>
+<li>challenge player 2's word if they think that no word can be formed with the
+current fragment. Then, player 2 must provide a valid word starting with the
+current fragment or lose.</li>
+<li>add a letter to move the fragment towards a valid word</li>
+<li>attempt to bluff player 2 by adding a letter that doesn't move the fragment
+towards a valid word</li>
+</ul>
+<p>You can read more about this game on <a href="https://en.wikipedia.org/wiki/Ghost_%28game%29">Wikipedia</a>.</p>
+<p>The UI for our game will look like this:</p>
+<p><img alt="Ghost screenshot" src="gh_files/ghost.png"></p>
+<h3>Tour of the code</h3>
+<p>We've provided a <a href="https://cswithandroid.withgoogle.com/content/assets/img/ghost_starter.zip">starter project</a>
+for you with some skeleton code as a starting point. It is made up of the
+following files:</p>
+<ul>
+<li><code>GhostActivity</code>: the activity for this app with the methods:<ul>
+<li><code>onCreate</code>, <code>onCreateOptionsMenu</code> and <code>onOptionsItemSelected</code> which you
+  will not need to edit</li>
+<li><code>onStart</code>: the handler for the <code>Reset</code> button but also called from
+  <code>onCreate</code> to determine whether the user or the computer goes first.</li>
+<li><code>computerTurn</code>: the helper that handles the computer's turn. Called from
+  <code>onStart</code></li>
+</ul>
+</li>
+<li><code>GhostDictionary</code>: Note that this is an interface, not a class. This is the
+  shared interface for <code>SimpleDictionary</code> and <code>FastDictionary</code>. This shared
+  interface makes it easy to swap between the two kinds of dictionaries in the
+  activity.</li>
+<li><code>SimpleDictionary</code>: This is an implementation of our dictionary that stores
+  the words in an ArrayList.<ul>
+<li><code>SimpleDictionary</code>: the constructor implementation is provided. It simply
+  copies the words from the files into the ArrayList</li>
+<li><code>isWord</code>: checks whether the given word is in the ArrayList.</li>
+<li><code>getAnyWordStartingWith</code>: will naively use binary search to look for some
+  word that starts with the given prefix.</li>
+<li><code>getGoodWordStartingWith</code>: will still use binary search but will try to
+  make a smarter word selection than <code>getAnyWordStartingWith</code></li>
+</ul>
+</li>
+<li><code>FastDictionary</code>: This is an implementation of our dictionary that stores
+  the words in a trie (we will implement this in the next unit). The interface
+  is the same as <code>SimpleDictionary</code> and the given implementation is complete
+  as all the actual functionality goes into the <code>TrieNode</code> class.</li>
+<li><code>TrieNode</code>: This is an implementation of a single node in our trie. You will
+  implement this in the next unit.<ul>
+<li><code>TrieNode</code>: the constructor implementation is provided.</li>
+<li><code>add</code>: to add a string to the trie.</li>
+<li><code>isWord</code>: checks whether the given word is in the trie.</li>
+<li><code>getAnyWordStartingWith</code>: will randomly select a descendant of the node
+  that represents the given prefix.</li>
+<li><code>getGoodWordStartingWith</code>: will attempt to pick a descendant of the given
+  prefix that is likely to lead to the computer winning.</li>
+</ul>
+</li>
+</ul>
+<h3>Ghost with simple computer player</h3>
+<p>Continue by editing activity_ghost.xml to create the proper ui.
+It should contain:</p>
+<ul>
+<li>A large TextView to display the word fragment. Note that we are not using an
+EditText for this field because the EditText field brings in many default
+behaviors that are not desirable in this case.</li>
+<li>A smaller TextView to display the game status</li>
+<li>Two buttons, one to challenge the validity of the word that the computer
+is creating and one to start a new round. The reset button's handler is provided
+as the <code>onStart</code> method.</li>
+</ul>
+<p>The provided assets directory contains a file called "words.txt" which
+contains 10,000 words that we will use as the basis for our dictionary.
+Feel free to substitute your own word list if you desire.</p>
+<p>Initialize the dictionary by loading the content of the file in the
+<code>GhostActivity.onCreate</code> method. You can use <code>getAssets().open</code> to access the
+dictionary file as an InputStream and feed it to the <code>SimpleDictionary</code>'s
+constructor to instantiate the dictionary member. We've provided the
+implementation of <code>SimpleDictionary</code>'s constructor and the <code>isWord</code> method which
+is all you need for now.</p>
+<p>Since we are not using a standard EditText field, we will need to do some
+keyboard handling. Proceed to override the <code>GhostActivity.onKeyUp</code> method.
+If the key that the user pressed is not a letter, default to returning the value
+of <code>super.onKeyUp()</code>. Otherwise, add the letter to the word fragment. Also check
+whether the current word fragment is a complete word and, if it is, update the
+game status label to indicate so (this is not the right behavior for the game
+but will allow you to verify that your code is working for now).</p>
+<p>You should have a working app and can test the basic functionality of your code.
+If your app is not working as intended, look for error messages in the logcat
+window of Android Studio. You may also need to add some logging to your app in
+order to see why it is not working as intended.</p>
+<p>If your app is working so far, it's time to take on the <code>computerTurn</code> method.
+This method should get the current word fragment and:</p>
+<ol>
+<li>Check if the fragment is a word with at least 4 characters. If so declare
+victory by updating the game status</li>
+<li>Use the dictionary's <code>getAnyWordStartingWith</code> method to get a possible
+longer word</li>
+<li>If such a word doesn't exist (method returns null), challenge the user's
+fragment and declare victory (you can't bluff this computer!)</li>
+<li>If such a word does exist, add the next letter of it to the fragment
+(remember the substring method in the <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html">Java string library</a>)</li>
+</ol>
+<p>At this stage, you might notice that <code>getAnyWordStartingWith</code> is not implemented
+in <code>SimpleDictionary</code>. Write your own implementation of <code>getAnyWordStartingWith</code>
+that does the following:</p>
+<ul>
+<li>If prefix is empty return a randomly selected word from the words <code>ArrayList</code></li>
+<li>Otherwise, perform a binary search over the words <code>ArrayList</code> until you find a
+word that starts with the given prefix and return it.</li>
+<li>If no such word exists, return null</li>
+</ul>
+<p>Now return to <code>GhostActivity</code> and implement the handler for the Challenge
+button. It should:</p>
+<ul>
+<li>Get the current word fragment</li>
+<li>If it has at least 4 characters and is a valid word, declare victory for the
+user</li>
+<li>otherwise if a word can be formed with the fragment as prefix, declare victory
+for the computer and display a possible word</li>
+<li>If a word cannot be formed with the fragment, declare victory for the user</li>
+</ul>
+<p>Having completed the basic functionality of the game, it's time to improve the
+computer player by implementing <code>getGoodWordStartingWith</code>. This method improves
+on the performance of <code>getAnyWordStartingWith</code> by:
+- using binary search to determine the whole range of words that start with the
+  given prefix.
+- dividing the words between odd lengths and even lengths
+- randomly selecting a word from the appropriate set (whether it's even or odd
+  depends on who went first)</p>
+<p>Finally, take some time to apply what you have learned about preserving an app's
+state to save both the word fragment and the current game status message when
+the app is suspended. The easiest way to trigger suspension behavior is to cause
+the screen to rotate between portrait and landscape mode. You can enable this by
+editing the line in <code>AndroidManifest</code> that locks our app in portrait mode. Note
+that the game is not playable in landscape mode as the keyboard disappears.</p>
+<h3>Extensions</h3>
+<p>There are a couple of ideas for extensions to inspire you:</p>
+<ul>
+<li>Keep track of scores over the course of multiple words. If you do this make
+sure that these scores survive the app being suspended.</li>
+<li>Simple-superghost lets the human player add a letter to either the end or
+the start of the fragment. The computer still only adds at the end. You will
+need to come up with a good UI to let the user select front or back.</li>
+</ul></div></div>
+
+</span><div></div>
+    
+  </div>
+
+
+
+  
+
+
+        </div><!-- /gcb-aside -->
+      
+      
+
+      <div id="gcb-nav-button-box" class="gcb-button-box">
+        
+        <div class="gcb-prev-button">
+          
+            
+            <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=8"> Previous Page </a>
+          
+        </div>
+        <div class="gcb-next-button">
+          
+            
+            <a href="https://cswithandroid.withgoogle.com/content/unit?unit=7&amp;lesson=17"> Next Page </a>
+          
+        </div>
+        
+      </div>
+    
+    <div class="gcb-html-hook" id="unit-before-content-ends"></div>
+  </div>
+</div>
+
+
+        <div class="gcb-html-hook" id="base-after-main-content-ends"><!-- base.after_main_content_ends --></div>
+      </div>
+    </div>
+
+    <!-- footer section -->
+    <div style="margin-top: 50px;" id="gcb-signature"></div>
+    <div class="gcb-footer" id="gcb-footer">
+      <div id="gcb-footer-local">
+        <div class="gcb-aux">
+        </div>
+      </div>
+      <div id="gcb-footer-global" role="contentinfo">
+        <div class="gcb-aux">
+          <ul>
+            
+            <li>
+              <a href="http://www.google.com/" target="_blank" id="institution-link">Google</a>
+            </li>
+            
+            
+            <li>
+              <a href="https://www.google.com/intl/en/policies/" target="_blank" id="privacy-policy-link">
+                
+                Privacy &amp; Terms
+              </a>
+            </li>
+            
+            
+            
+              <li><a href="https://cswithandroid.withgoogle.com/content/student/unenroll">Delete My Data</a></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="gcb-html-hook" id="base-before-body-tag-ends"><!-- base.before_body_tag_ends --></div>
+
+    
+    
+    
+  
+<iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;" src="gh_files/postmessageRelay.html" id="oauth2relay831866773" name="oauth2relay831866773"></iframe></body></html>
