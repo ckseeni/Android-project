@@ -1,0 +1,2 @@
+ # * * * python /home/pi/ProjectAlarm/sensoron.py
+@reboot sh /home/pi/ProjectAlarm/startupScript.sh
